@@ -2,9 +2,14 @@
   "name": "memories-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node dist/src/server.js",
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "configure:r2-cors": "tsx src/scripts/configure-r2-cors.ts",
+    "test": "npm run check"
   },
   "keywords": [],
   "author": "",
@@ -12,6 +17,7 @@
   "type": "module",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1090.0",
+    "@aws-sdk/s3-request-presigner": "^3.1095.0",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
@@ -21,5 +27,12 @@
     "multer": "^2.2.0",
     "nodemon": "^3.1.14",
     "sharp": "^0.35.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.6",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.8.0"
   }
 }
