@@ -1,1 +1,31 @@
-<p>gallery-component works!</p>
+<section class="container gallery">
+  <header class="page-head">
+    <h1>Gallery</h1>
+    <p class="muted">Every photo and video you've added, all in one place.</p>
+  </header>
+
+  @if (loading()) {
+    <div class="masonry">
+      @for (n of [1, 2, 3, 4, 5, 6]; track n) {
+        <div class="tile skeleton"></div>
+      }
+    </div>
+  } @else if (failed()) {
+    <p class="state">Couldn't load your gallery. Please refresh.</p>
+  } @else if (media().length === 0) {
+    <div class="empty card">
+      <div class="empty-icon">✦</div>
+      <h2>Nothing here yet</h2>
+      <a routerLink="/add" class="btn btn-primary">+ Add a memory</a>
+    </div>
+  } @else {
+    <div class="masonry">
+      @for (item of media(); track item._id) {
+        <div class="tile">
+          <app-media-image [mediaId]="item._id" [type]="item.type" ratio="1 / 1" />
+        </div>
+      }
+    </div>
+  }
+</section>
+

@@ -1,0 +1,87 @@
+<section class="container add-page">
+  <header class="page-head">
+    <h1>Add a memory</h1>
+    <p class="muted">Upload your photos or videos, give the moment a name, and save it to your collection.</p>
+  </header>
+
+  <div class="add-grid">
+    <div class="upload-column">
+      <div
+        class="dropzone"
+        [class.dragging]="dragging()"
+        (dragover)="onDragOver($event)"
+        (dragleave)="onDragLeave()"
+        (drop)="onDrop($event)"
+      >
+        <input
+          #fileInput
+          type="file"
+          accept="image/*,video/*"
+          multiple
+          hidden
+          (change)="onFilesSelected($event)"
+        />
+        <div class="dropzone-inner">
+          <div class="dropzone-icon">✦</div>
+          <p class="dropzone-title">Drag & drop photos or videos here</p>
+          <p class="muted">up to 20 files per memory</p>
+          <button type="button" class="btn btn-ghost" (click)="fileInput.click()">Choose files</button>
+        </div>
+      </div>
+
+      @if (files().length > 0) {
+        <div class="previews">
+          @for (item of files(); track item.previewUrl; let i = $index) {
+            <div class="preview-tile">
+              @if (isVideo(item.file)) {
+                <video [src]="item.previewUrl" muted></video>
+              } @else {
+                <img [src]="item.previewUrl" [alt]="item.file.name" />
+              }
+              @if (!saving()) {
+                <button type="button" class="preview-remove" (click)="removeFile(i)" aria-label="Remove">×</button>
+              }
+              @if (progress()[i]?.done) {
+                <span class="preview-done">✓</span>
+              } @else if (saving() && progress()[i]) {
+                <span class="preview-progress">{{ progress()[i].percent }}%</span>
+              }
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="details-column card">
+      <label class="field">
+        <span class="field-label">Title</span>
+        <input type="text" [ngModel]="title()" (ngModelChange)="title.set($event)" placeholder="e.g. Sunday at grandma's" [disabled]="saving()" />
+      </label>
+
+      <label class="field">
+        <span class="field-label">Story <span class="muted">(optional)</span></span>
+        <textarea rows="5" [ngModel]="story()" (ngModelChange)="story.set($event)" placeholder="What made this moment worth keeping?" [disabled]="saving()"></textarea>
+      </label>
+
+      <label class="field">
+        <span class="field-label">When did it happen? <span class="muted">(optional)</span></span>
+        <input type="date" [ngModel]="happenedAt()" (ngModelChange)="happenedAt.set($event)" [disabled]="saving()" />
+      </label>
+
+      @if (error()) {
+        <p class="error">{{ error() }}</p>
+      }
+
+      @if (saving()) {
+        <div class="save-status">
+          <div class="bar"><div class="bar-fill" [style.width.%]="overallPercent()"></div></div>
+          <p class="muted">{{ statusText() }} {{ overallPercent() }}%</p>
+        </div>
+      }
+
+      <button type="button" class="btn btn-primary save-btn" [disabled]="!canSave()" (click)="save()">
+        {{ saving() ? 'Saving…' : 'Save memory' }}
+      </button>
+    </div>
+  </div>
+</section>

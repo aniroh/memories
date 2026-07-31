@@ -1,1 +1,74 @@
-<p>memory-detail-component works!</p>
+<section class="container detail">
+  @if (loading()) {
+    <p class="state muted">Loading…</p>
+  } @else if (failed()) {
+    <p class="state">Couldn't load this memory.</p>
+    <a routerLink="/" class="btn btn-ghost">Back home</a>
+  } @else if (memory(); as m) {
+    <a routerLink="/timeline" class="back">← Back to timeline</a>
+
+    <header class="detail-head">
+      <h1>{{ m.title }}</h1>
+      @if (m.happenedAt) {
+        <p class="muted">{{ m.happenedAt | date: 'fullDate' }}</p>
+      }
+      @if (m.location?.placeName) {
+        <p class="muted">📍 {{ m.location?.placeName }}</p>
+      }
+    </header>
+
+    <article class="story">
+      @for (block of blocks(); track $index) {
+        @switch (block.type) {
+          @case ('heading') {
+            <h2 class="b-heading">{{ text(block) }}</h2>
+          }
+          @case ('text') {
+            <p class="b-text">{{ text(block) }}</p>
+          }
+          @case ('quote') {
+            <blockquote class="b-quote">{{ text(block) }}</blockquote>
+          }
+          @case ('divider') {
+            <hr class="b-divider" />
+          }
+          @case ('image') {
+            @if (mediaId(block); as id) {
+              <figure class="b-image">
+                <app-media-image [mediaId]="id" ratio="3 / 2" [alt]="m.title" />
+                @if (block.caption) { <figcaption class="muted">{{ block.caption }}</figcaption> }
+              </figure>
+            }
+          }
+          @case ('video') {
+            @if (mediaId(block); as id) {
+              <figure class="b-image">
+                <app-media-image [mediaId]="id" type="video" ratio="16 / 9" />
+                @if (block.caption) { <figcaption class="muted">{{ block.caption }}</figcaption> }
+              </figure>
+            }
+          }
+          @case ('gallery') {
+            <div class="b-gallery">
+              @for (id of mediaIds(block); track id) {
+                <div class="g-item">
+                  <app-media-image [mediaId]="id" ratio="1 / 1" [alt]="m.title" />
+                </div>
+              }
+            </div>
+          }
+          @case ('map') {
+            <p class="b-map muted">📍 {{ text(block) || 'A place on the map' }}</p>
+          }
+        }
+      }
+    </article>
+
+    <footer class="detail-foot">
+      <button type="button" class="btn btn-ghost danger" (click)="remove()" [disabled]="deleting()">
+        {{ deleting() ? 'Deleting…' : 'Delete memory' }}
+      </button>
+    </footer>
+  }
+</section>
+

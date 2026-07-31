@@ -1,0 +1,34 @@
+services:
+  - type: web
+    name: memories-backend
+    runtime: node
+    plan: free
+    rootDir: memories-backend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 22.22.3
+      - key: NODE_ENV
+        value: production
+      # Secrets — set these in the Render dashboard (do NOT commit real values).
+      - key: MONGODB_URI
+        sync: false
+      - key: R2_ACCOUNT_ID
+        sync: false
+      - key: R2_BUCKET_NAME
+        sync: false
+      - key: R2_ACCESS_KEY_ID
+        sync: false
+      - key: R2_SECRET_ACCESS_KEY
+        sync: false
+      # Comma-separated allowed origins — include your Cloudflare Pages URL.
+      - key: CORS_ORIGINS
+        sync: false
+      # Optional overrides:
+      - key: R2_ENDPOINT
+        sync: false
+      - key: R2_PUBLIC_BASE_URL
+        sync: false

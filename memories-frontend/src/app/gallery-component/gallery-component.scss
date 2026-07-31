@@ -1,0 +1,55 @@
+.page-head {
+  margin-bottom: 1.6rem;
+}
+
+.page-head h1 {
+  font-size: 2.2rem;
+}
+
+.masonry {
+  columns: 4 200px;
+  column-gap: 0.9rem;
+}
+
+.tile {
+  break-inside: avoid;
+  margin-bottom: 0.9rem;
+  border-radius: var(--warm-radius-sm);
+  overflow: hidden;
+  box-shadow: var(--warm-shadow-sm);
+  background: var(--warm-surface-alt);
+}
+
+.tile.skeleton {
+  aspect-ratio: 1;
+  background: linear-gradient(100deg, #f4e7d6 30%, #fbf1e4 50%, #f4e7d6 70%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+.empty {
+  text-align: center;
+  padding: 3rem 1.5rem;
+}
+
+.empty-icon {
+  font-size: 2rem;
+  color: var(--warm-primary);
+}
+
+.empty .btn {
+  margin-top: 1rem;
+}
+
+.state {
+  padding: 2rem 0;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

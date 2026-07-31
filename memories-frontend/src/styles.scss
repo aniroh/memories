@@ -1,39 +1,159 @@
-// Include theming for Angular Material with `mat.theme()`.
-// This Sass mixin will define CSS variables that are used for styling Angular Material
-// components according to the Material 3 design spec.
-// Learn more about theming and how to use it for your application's
-// custom components at https://material.angular.dev/guide/theming
-@use '@angular/material' as mat;
+/* Warm "connection" theme — memories of people, places and moments. */
 
-html {
+:root {
+  /* Backgrounds */
+  --warm-bg: #faf3ea;
+  --warm-bg-tint: #f4e7d6;
+  --warm-surface: #fffaf3;
+  --warm-surface-alt: #fdf2e6;
+
+  /* Brand — terracotta / clay warmth that reads as human connection */
+  --warm-primary: #c65d3b;
+  --warm-primary-strong: #a8492b;
+  --warm-primary-soft: #e6a487;
+  --warm-accent: #e08d79;
+  --warm-gold: #dda44e;
+
+  /* Ink & text */
+  --warm-ink: #3a2e28;
+  --warm-ink-soft: #6d5c52;
+  --warm-muted: #98867a;
+
+  /* Lines & shadows */
+  --warm-border: #ecdccb;
+  --warm-shadow: 0 10px 30px rgba(120, 72, 45, 0.12);
+  --warm-shadow-sm: 0 4px 14px rgba(120, 72, 45, 0.1);
+
+  --warm-radius: 18px;
+  --warm-radius-sm: 12px;
+
+  --warm-font: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+  --warm-serif: 'Georgia', 'Times New Roman', serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
   height: 100%;
-  @include mat.theme(
-    (
-      color: (
-        primary: mat.$azure-palette,
-        tertiary: mat.$blue-palette,
-      ),
-      typography: Roboto,
-      density: 0,
-    )
-  );
 }
 
 body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
-  color-scheme: light;
-
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
-
-  // Reset the user agent margin.
   margin: 0;
-  height: 100%;
+  color: var(--warm-ink);
+  background:
+    radial-gradient(1200px 600px at 100% -10%, rgba(221, 164, 78, 0.14), transparent 60%),
+    radial-gradient(900px 500px at -10% 10%, rgba(224, 141, 121, 0.14), transparent 55%),
+    var(--warm-bg);
+  font-family: var(--warm-font);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
-/* You can add global styles to this file, and also import other style files */
+
+a {
+  color: var(--warm-primary-strong);
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--warm-serif);
+  color: var(--warm-ink);
+  line-height: 1.2;
+  margin: 0;
+}
+
+/* Shared building blocks */
+.container {
+  width: min(1120px, 92vw);
+  margin: 0 auto;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+  cursor: pointer;
+  padding: 0.7rem 1.25rem;
+  border-radius: 999px;
+  font-size: 0.98rem;
+  font-weight: 600;
+  font-family: var(--warm-font);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--warm-primary), var(--warm-primary-strong));
+  color: #fff;
+  box-shadow: var(--warm-shadow-sm);
+}
+
+.btn-primary:hover {
+  box-shadow: var(--warm-shadow);
+}
+
+.btn-ghost {
+  background: var(--warm-surface);
+  color: var(--warm-primary-strong);
+  border: 1px solid var(--warm-border);
+}
+
+.btn-ghost:hover {
+  background: var(--warm-surface-alt);
+}
+
+.btn[disabled] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.card {
+  background: var(--warm-surface);
+  border: 1px solid var(--warm-border);
+  border-radius: var(--warm-radius);
+  box-shadow: var(--warm-shadow-sm);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  background: var(--warm-bg-tint);
+  color: var(--warm-primary-strong);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.muted {
+  color: var(--warm-muted);
+}
+
+input,
+textarea {
+  font-family: var(--warm-font);
+  font-size: 1rem;
+  color: var(--warm-ink);
+  background: var(--warm-surface);
+  border: 1px solid var(--warm-border);
+  border-radius: var(--warm-radius-sm);
+  padding: 0.7rem 0.9rem;
+  width: 100%;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--warm-primary-soft);
+  box-shadow: 0 0 0 3px rgba(224, 141, 121, 0.2);
+}

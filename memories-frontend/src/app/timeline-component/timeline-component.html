@@ -1,1 +1,39 @@
-<p>timeline-component works!</p>
+<section class="container timeline">
+  <header class="page-head">
+    <h1>Timeline</h1>
+    <p class="muted">Your memories, in the order they happened.</p>
+  </header>
+
+  @if (loading()) {
+    <p class="state muted">Loading…</p>
+  } @else if (failed()) {
+    <p class="state">Couldn't load your timeline. Please refresh.</p>
+  } @else if (memories().length === 0) {
+    <div class="empty card">
+      <div class="empty-icon">✦</div>
+      <h2>No memories yet</h2>
+      <a routerLink="/add" class="btn btn-primary">+ Add a memory</a>
+    </div>
+  } @else {
+    <ol class="track">
+      @for (m of memories(); track m._id) {
+        <li class="entry">
+          <div class="dot"></div>
+          <a class="entry-card card" [routerLink]="['/memory', m._id]">
+            <div class="entry-thumb">
+              @if (cover(m); as mediaId) {
+                <app-media-image [mediaId]="mediaId" ratio="1 / 1" [alt]="m.title" />
+              }
+            </div>
+            <div class="entry-body">
+              <span class="date muted">{{ (m.happenedAt || m.createdAt) | date: 'longDate' }}</span>
+              <h3>{{ m.title }}</h3>
+              <span class="muted small">{{ mediaCount(m) }} item{{ mediaCount(m) === 1 ? '' : 's' }}</span>
+            </div>
+          </a>
+        </li>
+      }
+    </ol>
+  }
+</section>
+

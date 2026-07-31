@@ -1,0 +1,90 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(255, 250, 243, 0.82);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--warm-border);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 0;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--warm-serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--warm-ink);
+  letter-spacing: 0.01em;
+}
+
+.brand-mark {
+  color: var(--warm-primary);
+  font-size: 1.1rem;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.site-nav a {
+  padding: 0.5rem 0.85rem;
+  border-radius: 999px;
+  color: var(--warm-ink-soft);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.site-nav a:hover {
+  color: var(--warm-primary-strong);
+  background: var(--warm-surface-alt);
+}
+
+.site-nav a.active {
+  color: var(--warm-primary-strong);
+  background: var(--warm-bg-tint);
+}
+
+.nav-cta,
+.site-nav a.nav-cta:hover {
+  color: #fff;
+  background: linear-gradient(135deg, var(--warm-primary), var(--warm-primary-strong));
+}
+
+.site-main {
+  flex: 1;
+  padding: 2rem 0 3.5rem;
+}
+
+.site-footer {
+  border-top: 1px solid var(--warm-border);
+  padding: 1.5rem 0;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 560px) {
+  .brand-text {
+    display: none;
+  }
+  .site-nav a {
+    padding: 0.45rem 0.6rem;
+    font-size: 0.9rem;
+  }
+}
