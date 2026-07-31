@@ -1,0 +1,9 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "memories",
+  "compatibility_date": "2026-08-01",
+  "assets": {
+    "directory": "./dist/memories-frontend/browser",
+    "not_found_handling": "single-page-application"
+  }
+}

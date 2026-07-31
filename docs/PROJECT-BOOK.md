@@ -168,7 +168,7 @@ viewing experiences are the next product work.
 | API | Express 5 with TypeScript | Small, clear REST API for a personal V1 |
 | Database | MongoDB Atlas with Mongoose | Flexible document model for varied story blocks and metadata |
 | Original media | Cloudflare R2 (S3-compatible) | Object storage suitable for a growing photo/video library |
-| Frontend hosting | Cloudflare Pages | Static Angular hosting with SPA redirect support |
+| Frontend hosting | Cloudflare Workers static assets | Static Angular hosting with Workers-native SPA fallback support |
 | API hosting | Render | Hosts Express and coordinates data without serving bulk media bytes |
 | Shared contracts | `shared/contracts/memory.ts` | Keeps the frontend/API shape aligned without coupling Angular to Mongoose |
 
@@ -344,7 +344,7 @@ The Angular application already has routes for:
 
 They are currently scaffold components, not connected user experiences. The
 local development server uses an `/api` proxy to the Express API. Cloudflare
-Pages has an SPA redirect rule so direct route visits do not 404 in production.
+Workers uses a native SPA fallback so direct route visits do not 404 in production.
 
 The next frontend slices are, in order:
 
@@ -368,7 +368,7 @@ support a story; it should not make a private memory hard to read.
   never commit `.env` values or put R2 credentials in Angular.
 - Apply the existing Helmet and explicit CORS configuration. `CORS_ORIGINS`
   must include `http://localhost:4200` in development and the actual
-  Cloudflare Pages domain in production.
+  Cloudflare Workers frontend origin in production.
 - Direct browser uploads require an R2 bucket CORS rule. The current token can
   read/write objects but was unable to alter bucket CORS; it needs temporary
   bucket-configuration/R2 Admin write access to run `npm run configure:r2-cors`.
